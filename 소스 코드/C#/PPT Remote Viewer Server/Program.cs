@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
 
-namespace RemotePT_server
+namespace PPTRemoteViewerServer
 {
     static class Program
     {
@@ -18,7 +18,7 @@ namespace RemotePT_server
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }

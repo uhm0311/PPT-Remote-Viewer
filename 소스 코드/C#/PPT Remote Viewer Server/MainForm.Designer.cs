@@ -1,6 +1,6 @@
-﻿namespace RemotePT_server
+﻿namespace PPTRemoteViewerServer
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.txtbox1 = new System.Windows.Forms.TextBox();
             this.btn_serverstart = new System.Windows.Forms.Button();
             this.btn_serverexit = new System.Windows.Forms.Button();
@@ -75,7 +75,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.BackgroundImage = global::RemotePT_server.Properties.Resources.색깔;
+            this.BackgroundImage = global::PPTRemoteViewerServer.Properties.Resources.Background;
             this.ClientSize = new System.Drawing.Size(274, 196);
             this.Controls.Add(this.btn_serverexit);
             this.Controls.Add(this.btn_serverstart);

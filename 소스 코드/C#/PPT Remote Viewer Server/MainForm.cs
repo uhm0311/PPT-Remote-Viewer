@@ -16,11 +16,11 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Net;
 
-namespace RemotePT_server
+namespace PPTRemoteViewerServer
 {
     public delegate void progressUpdateDelegate(int index); 
 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         [DllImport("user32.dll")]
         static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
@@ -35,7 +35,7 @@ namespace RemotePT_server
 
         bool isStarted = false;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -89,6 +89,10 @@ namespace RemotePT_server
         private void Form1_Load(object sender, EventArgs e){
             txtbox1.Text = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
 
+
+            string hostName = Dns.GetHostName();
+            IPAddress[] d = Dns.GetHostAddresses(Dns.GetHostName());
+            // ipv4는 AddressFamily.Internetwork이다.
         }
 
         public void run_Accept()
