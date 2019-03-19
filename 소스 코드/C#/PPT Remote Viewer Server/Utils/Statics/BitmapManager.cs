@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace PPTRemoteViewerServer.Utils
+namespace PPTRemoteViewerServer.Utils.Statics
 {
     public partial class BitmapManager
     {

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PPTRemoteViewerServer
+namespace PPTRemoteViewerServer.Utils.Connections
 {
-    public class ConnectionManager
+    public enum PacketType
     {
+        Screen,
+        Key
     }
 }

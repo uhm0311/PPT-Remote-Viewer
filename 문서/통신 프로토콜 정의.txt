@@ -1,0 +1,11 @@
+		Bytes
+		1	2	3	4	5	6	7	8
+case	Screen	0	Size of the Screen Bitmap object	Screen Bitmap object
+case	Key	1	0 or 1
+
+1. Screen인 경우 1바이트 값은 0
+	2바이트~5바이트 (총 4바이트)는 스크린의 크기
+	6바이트부터 스크린의 크기만큼은 실제 스크린 이미지 데이터
+
+2. Key인 경우 1바이트 값은 1
+	이후 1바이트(2)는 Previous(0) 혹은 Next(1)

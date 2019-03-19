@@ -30,63 +30,91 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.txtbox1 = new System.Windows.Forms.TextBox();
-            this.btn_serverstart = new System.Windows.Forms.Button();
-            this.btn_serverexit = new System.Windows.Forms.Button();
-            this.min = new System.Windows.Forms.NotifyIcon(this.components);
+            this.startServer = new System.Windows.Forms.Button();
+            this.stopServer = new System.Windows.Forms.Button();
+            this.tray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.ipAddresses = new System.Windows.Forms.ComboBox();
+            this.label = new System.Windows.Forms.Label();
+            this.serverState = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // txtbox1
+            // startServer
             // 
-            this.txtbox1.Location = new System.Drawing.Point(18, 39);
-            this.txtbox1.Name = "txtbox1";
-            this.txtbox1.Size = new System.Drawing.Size(238, 21);
-            this.txtbox1.TabIndex = 0;
+            this.startServer.Location = new System.Drawing.Point(12, 140);
+            this.startServer.Name = "startServer";
+            this.startServer.Size = new System.Drawing.Size(227, 23);
+            this.startServer.TabIndex = 1;
+            this.startServer.Text = "서버 시작";
+            this.startServer.UseVisualStyleBackColor = true;
+            this.startServer.Click += new System.EventHandler(this.startServer_Click);
             // 
-            // btn_serverstart
+            // stopServer
             // 
-            this.btn_serverstart.Location = new System.Drawing.Point(42, 130);
-            this.btn_serverstart.Name = "btn_serverstart";
-            this.btn_serverstart.Size = new System.Drawing.Size(75, 23);
-            this.btn_serverstart.TabIndex = 1;
-            this.btn_serverstart.Text = "시작";
-            this.btn_serverstart.UseVisualStyleBackColor = true;
-            this.btn_serverstart.Click += new System.EventHandler(this.btn_serverstart_Click);
+            this.stopServer.Location = new System.Drawing.Point(245, 140);
+            this.stopServer.Name = "stopServer";
+            this.stopServer.Size = new System.Drawing.Size(227, 23);
+            this.stopServer.TabIndex = 2;
+            this.stopServer.Text = "서버 종료";
+            this.stopServer.UseVisualStyleBackColor = true;
+            this.stopServer.Click += new System.EventHandler(this.stopServer_Click);
             // 
-            // btn_serverexit
+            // tray
             // 
-            this.btn_serverexit.Location = new System.Drawing.Point(154, 130);
-            this.btn_serverexit.Name = "btn_serverexit";
-            this.btn_serverexit.Size = new System.Drawing.Size(75, 23);
-            this.btn_serverexit.TabIndex = 2;
-            this.btn_serverexit.Text = "연결끊기";
-            this.btn_serverexit.UseVisualStyleBackColor = true;
-            this.btn_serverexit.Click += new System.EventHandler(this.button2_Click);
+            this.tray.Icon = ((System.Drawing.Icon)(resources.GetObject("tray.Icon")));
+            this.tray.Text = "PPT Remote Viewer Server";
+            this.tray.Visible = true;
+            this.tray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tray_MouseDoubleClick);
             // 
-            // min
+            // ipAddresses
             // 
-            this.min.Icon = ((System.Drawing.Icon)(resources.GetObject("min.Icon")));
-            this.min.Text = "Server";
-            this.min.Visible = true;
-            this.min.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.min_MouseDoubleClick);
+            this.ipAddresses.FormattingEnabled = true;
+            this.ipAddresses.Items.AddRange(new object[] {
+            "오른쪽의 화살표를 클릭하여 아이피 목록을 확인하세요."});
+            this.ipAddresses.Location = new System.Drawing.Point(95, 36);
+            this.ipAddresses.Name = "ipAddresses";
+            this.ipAddresses.Size = new System.Drawing.Size(377, 20);
+            this.ipAddresses.TabIndex = 3;
             // 
-            // Form1
+            // label
+            // 
+            this.label.AutoSize = true;
+            this.label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.label.Location = new System.Drawing.Point(12, 40);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(77, 12);
+            this.label.TabIndex = 4;
+            this.label.Text = "아이피 목록 :";
+            // 
+            // serverState
+            // 
+            this.serverState.AutoSize = true;
+            this.serverState.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.serverState.Location = new System.Drawing.Point(12, 64);
+            this.serverState.Name = "serverState";
+            this.serverState.Size = new System.Drawing.Size(84, 12);
+            this.serverState.TabIndex = 5;
+            this.serverState.Text = "서버 상태 : Off";
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::PPTRemoteViewerServer.Properties.Resources.Background;
-            this.ClientSize = new System.Drawing.Size(274, 196);
-            this.Controls.Add(this.btn_serverexit);
-            this.Controls.Add(this.btn_serverstart);
-            this.Controls.Add(this.txtbox1);
-            this.MaximumSize = new System.Drawing.Size(290, 234);
+            this.ClientSize = new System.Drawing.Size(484, 195);
+            this.Controls.Add(this.serverState);
+            this.Controls.Add(this.label);
+            this.Controls.Add(this.ipAddresses);
+            this.Controls.Add(this.stopServer);
+            this.Controls.Add(this.startServer);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(500, 234);
             this.MinimumSize = new System.Drawing.Size(290, 234);
-            this.Name = "Form1";
-            this.Text = "Server";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
+            this.Name = "MainForm";
+            this.Text = "PPT Remote Viewer Server";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -94,10 +122,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtbox1;
-        private System.Windows.Forms.Button btn_serverstart;
-        private System.Windows.Forms.Button btn_serverexit;
-        private System.Windows.Forms.NotifyIcon min;
+        private System.Windows.Forms.Button startServer;
+        private System.Windows.Forms.Button stopServer;
+        private System.Windows.Forms.NotifyIcon tray;
+        private System.Windows.Forms.ComboBox ipAddresses;
+        private System.Windows.Forms.Label label;
+        private System.Windows.Forms.Label serverState;
     }
 }
 
