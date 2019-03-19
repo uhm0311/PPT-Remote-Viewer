@@ -9,6 +9,7 @@ namespace PPTRemoteViewerServer.Utils.Connections
     public enum PacketType
     {
         Screen,
-        Key
+        Key,
+        None
     }
 }

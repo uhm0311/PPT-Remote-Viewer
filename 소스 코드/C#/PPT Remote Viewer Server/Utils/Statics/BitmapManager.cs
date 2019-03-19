@@ -52,7 +52,7 @@ namespace PPTRemoteViewerServer.Utils.Statics
             return (Bitmap)source.Clone();
         }
 
-        public static Bitmap EncodeToJPEG(Bitmap source, double widthFactor, double heightFactor, double quality)
+        public static byte[] EncodeToJPEG(Bitmap source, double widthFactor, double heightFactor, double quality)
         {
             int sizedWidth = (int)(source.Width * widthFactor);
             int sizedHeight = (int)(source.Height * heightFactor);
@@ -74,7 +74,7 @@ namespace PPTRemoteViewerServer.Utils.Statics
                     sized.Save(stream, jpeg, encoderParameters);
                     stream.Position = 0L;
 
-                    return (Bitmap)Bitmap.FromStream(stream);
+                    return stream.ToArray();
                 }
             }
         }

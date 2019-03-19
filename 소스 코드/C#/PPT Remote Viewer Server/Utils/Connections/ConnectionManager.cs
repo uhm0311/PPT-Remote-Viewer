@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
+using System.Windows.Forms;
 using PPTRemoteViewerServer.Utils.Observers;
 using PPTRemoteViewerServer.Utils.Observers.Subjects;
 using PPTRemoteViewerServer.Utils.Statics;
@@ -58,7 +58,7 @@ namespace PPTRemoteViewerServer.Utils.Connections
 
         public void OnScreenChanged(Bitmap screen)
         {
-
+            client.Send(PacketFactory.CreateScreenPacket(screen));
         }
 
         public void StartServer()
@@ -75,20 +75,16 @@ namespace PPTRemoteViewerServer.Utils.Connections
 
         private void RunConnection()
         {
-            byte[] buffer = new byte[1];
+            byte[] buffer = new byte[2];
             client = server.AcceptSocket();
 
             while (isRunning)
             {
                 client.Receive(buffer);
-                PacketType packetType = PacketReader.GetPacketType(buffer);
+                Packet packet = PacketReader.Read(buffer);
 
-                if (packetType.Equals(PacketType.Key))
-                {
-                    client.Receive(buffer);
-                    Win32.SendKey(PacketReader.GetKey(buffer));
-                }
-                else throw new Exception("Unexcepted Packet Type");
+                if (!packet.Key.Equals(Keys.None))
+                    Win32.SendKey(packet.Key);
             }
         }
 

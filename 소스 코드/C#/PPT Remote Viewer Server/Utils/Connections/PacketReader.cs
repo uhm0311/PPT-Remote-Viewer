@@ -11,22 +11,23 @@ namespace PPTRemoteViewerServer.Utils.Connections
 {
     public class PacketReader
     {
-        public static PacketType GetPacketType(byte[] buffer)
+        public static Packet Read(byte[] buffer)
         {
-            return (PacketType)buffer[0];
-        }
+            PacketType packetType = (PacketType)buffer[0];
+            Keys key = Keys.None;
 
-        public static Keys GetKey(byte[] buffer)
-        {
-            Keys none = Keys.None;
-
-            switch (buffer[0])
+            switch (buffer[1])
             {
-                case 0: return Keys.Left;
-                case 1: return Keys.Right;
+                case 0:
+                    key = Keys.Left;
+                    break;
 
-                default: return none;
+                case 1:
+                    key = Keys.Right;
+                    break;
             }
+
+            return new Packet(packetType, key);
         }
     }
 }

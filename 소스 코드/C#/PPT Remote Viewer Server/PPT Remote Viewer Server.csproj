@@ -54,6 +54,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\Connections\Packet.cs" />
+    <Compile Include="Utils\Connections\PacketFactory.cs" />
     <Compile Include="Utils\Connections\PacketReader.cs" />
     <Compile Include="Utils\Connections\PacketType.cs" />
     <Compile Include="Utils\Observers\ScreenRenewalObserver.cs" />
