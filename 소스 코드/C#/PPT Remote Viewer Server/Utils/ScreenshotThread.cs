@@ -58,7 +58,7 @@ namespace PPTRemoteViewerServer.Utils
                 else sendScreen = true;
 
                 if (sendScreen)
-                    subject.Notify(currentScreen);
+                    subject.Notify(BitmapManager.CloneBitmap(currentScreen));
 
                 Thread.Sleep(100);
             }
@@ -83,6 +83,11 @@ namespace PPTRemoteViewerServer.Utils
                     currentScreen = null;
                 }
             }
+        }
+
+        public Bitmap GetCurrentScreen()
+        {
+            return BitmapManager.CloneBitmap(currentScreen);
         }
     }
 }

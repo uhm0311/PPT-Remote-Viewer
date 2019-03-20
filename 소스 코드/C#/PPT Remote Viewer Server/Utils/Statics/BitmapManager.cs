@@ -16,33 +16,40 @@ namespace PPTRemoteViewerServer.Utils.Statics
         {
             if (source.Size.Equals(target.Size))
             {
-                string sourcePixel, targetPixel;
-
-                int width = source.Width;
-                int height = source.Height;
-                int threshold = width * height / thresholdFactor;
-
-                int unitWidth = width / unitFactor;
-                int unitHeight = height / unitFactor;
-
-                for (int i = 0; i < source.Width; i += unitWidth)
+                try
                 {
-                    for (int j = 0; j < source.Height; j += unitHeight)
+                    string sourcePixel, targetPixel;
+
+                    int width = source.Width;
+                    int height = source.Height;
+                    int threshold = width * height / thresholdFactor;
+
+                    int unitWidth = width / unitFactor;
+                    int unitHeight = height / unitFactor;
+
+                    for (int i = 0; i < source.Width; i += unitWidth)
                     {
-                        sourcePixel = source.GetPixel(i, j).ToString();
-                        targetPixel = target.GetPixel(i, j).ToString();
-
-                        if (!sourcePixel.Equals(targetPixel))
+                        for (int j = 0; j < source.Height; j += unitHeight)
                         {
-                            threshold--;
+                            sourcePixel = source.GetPixel(i, j).ToString();
+                            targetPixel = target.GetPixel(i, j).ToString();
 
-                            if (threshold <= 0)
-                                break;
+                            if (!sourcePixel.Equals(targetPixel))
+                            {
+                                threshold--;
+
+                                if (threshold <= 0)
+                                    break;
+                            }
                         }
                     }
-                }
 
-                return (threshold <= 0);
+                    return (threshold <= 0);
+                }
+                catch
+                {
+                    return false;
+                }
             }
             else return true;
         }

@@ -23,6 +23,7 @@ namespace PPTRemoteViewerServer
     public partial class MainForm : Form
     {
         private ConnectionManager connectionManager = null;
+        private const int port = 1282;
 
         public MainForm()
         {
@@ -31,7 +32,7 @@ namespace PPTRemoteViewerServer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            connectionManager = new ConnectionManager(new ScreenRenewalNotifier(), 1282);
+            connectionManager = new ConnectionManager(new ScreenRenewalNotifier(), port);
             ipAddresses.Items.AddRange(connectionManager.GetIPAddresses());
             ipAddresses.SelectedIndex = 0;
 

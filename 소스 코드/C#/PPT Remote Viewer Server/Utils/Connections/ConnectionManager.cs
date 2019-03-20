@@ -61,8 +61,17 @@ namespace PPTRemoteViewerServer.Utils.Connections
 
         public void OnScreenChanged(Bitmap screen)
         {
-            try { client.Send(PacketFactory.CreateScreenPacket(screen)); }
-            catch { }
+            try 
+            {
+                if (client != null)
+                    client.Send(PacketFactory.CreateScreenPacket(screen));
+
+                screen.Dispose();
+            }
+            catch 
+            {
+                CloseClient();
+            }
         }
 
         public void StartServer()
@@ -88,8 +97,15 @@ namespace PPTRemoteViewerServer.Utils.Connections
         {
             while (isRunning)
             {
-                try { client = server.AcceptSocket(); }
-                catch { }
+                try 
+                {
+                    client = server.AcceptSocket();
+                    OnScreenChanged(screenshotThread.GetCurrentScreen());
+                }
+                catch 
+                {
+                    CloseClient();
+                }
             }
         }
 
@@ -100,15 +116,19 @@ namespace PPTRemoteViewerServer.Utils.Connections
             while (isRunning)
             {
                 try 
-                { 
-                    client.Receive(buffer);
-                    Packet packet = PacketReader.Read(buffer);
+                {
+                    if (client != null)
+                    {
+                        client.Receive(buffer);
+                        Packet packet = PacketReader.Read(buffer);
 
-                    if (!packet.Key.Equals(Keys.None))
-                        Win32.SendKey(packet.Key);
+                        if (!packet.Key.Equals(Keys.None))
+                            Win32.SendKey(packet.Key);
+                    }
                 }
                 catch 
-                { 
+                {
+                    CloseClient();
                 }
             }
         }
@@ -123,6 +143,17 @@ namespace PPTRemoteViewerServer.Utils.Connections
                 acceptingThread.Abort();
                 receivingThread.Abort();
                 screenshotThread.Stop();
+
+                CloseClient();
+            }
+        }
+
+        private void CloseClient()
+        {
+            if (client != null)
+            {
+                client.Close();
+                client = null;
             }
         }
     }
