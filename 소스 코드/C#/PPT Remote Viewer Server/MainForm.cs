@@ -72,6 +72,7 @@ namespace PPTRemoteViewerServer
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             connectionManager.StopServer();
+            tray.Visible = false;
         }
     }
 }

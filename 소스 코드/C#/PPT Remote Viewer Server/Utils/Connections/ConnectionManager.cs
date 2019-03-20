@@ -17,16 +17,19 @@ namespace PPTRemoteViewerServer.Utils.Connections
         private TcpListener server = null;
         private Socket client = null;
 
-        private Thread connectionThread = null;
+        private Thread acceptingThread = null;
+        private Thread receivingThread = null;
         private ScreenshotThread screenshotThread = null;
+
+        private ScreenRenewalSubject subject = null;
+        private int port = -1;
 
         public ConnectionManager(ScreenRenewalSubject subject, int port)
         {
-            subject.AddObserver(this);
+            this.subject = subject;
+            this.port = port;
 
-            server = new TcpListener(IPAddress.Any, port);
-            connectionThread = new Thread(new ThreadStart(RunConnection)) { IsBackground = true };
-            screenshotThread = new ScreenshotThread(subject);
+            subject.AddObserver(this);
         }
 
         public string[] GetIPAddresses()
@@ -58,7 +61,8 @@ namespace PPTRemoteViewerServer.Utils.Connections
 
         public void OnScreenChanged(Bitmap screen)
         {
-            client.Send(PacketFactory.CreateScreenPacket(screen));
+            try { client.Send(PacketFactory.CreateScreenPacket(screen)); }
+            catch { }
         }
 
         public void StartServer()
@@ -67,24 +71,45 @@ namespace PPTRemoteViewerServer.Utils.Connections
             {
                 isRunning = true;
 
+                server = new TcpListener(IPAddress.Any, port);
                 server.Start(1);
-                connectionThread.Start();
+
+                acceptingThread = new Thread(new ThreadStart(RunAccepting)) { IsBackground = true };
+                receivingThread = new Thread(new ThreadStart(RunReceiving)) { IsBackground = true };
+                screenshotThread = new ScreenshotThread(subject);
+
+                acceptingThread.Start();
+                receivingThread.Start();
                 screenshotThread.Start();
             }
         }
 
-        private void RunConnection()
+        private void RunAccepting()
+        {
+            while (isRunning)
+            {
+                try { client = server.AcceptSocket(); }
+                catch { }
+            }
+        }
+
+        private void RunReceiving()
         {
             byte[] buffer = new byte[2];
-            client = server.AcceptSocket();
 
             while (isRunning)
             {
-                client.Receive(buffer);
-                Packet packet = PacketReader.Read(buffer);
+                try 
+                { 
+                    client.Receive(buffer);
+                    Packet packet = PacketReader.Read(buffer);
 
-                if (!packet.Key.Equals(Keys.None))
-                    Win32.SendKey(packet.Key);
+                    if (!packet.Key.Equals(Keys.None))
+                        Win32.SendKey(packet.Key);
+                }
+                catch 
+                { 
+                }
             }
         }
 
@@ -93,10 +118,11 @@ namespace PPTRemoteViewerServer.Utils.Connections
             if (isRunning)
             {
                 isRunning = false;
-                screenshotThread.Stop();
-
                 server.Stop();
-                connectionThread.Abort();
+
+                acceptingThread.Abort();
+                receivingThread.Abort();
+                screenshotThread.Stop();
             }
         }
     }

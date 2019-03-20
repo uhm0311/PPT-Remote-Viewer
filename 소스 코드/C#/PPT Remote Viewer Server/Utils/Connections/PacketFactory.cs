@@ -17,7 +17,12 @@ namespace PPTRemoteViewerServer.Utils.Connections
             packet.Add((byte)PacketType.Screen);
 
             byte[] jpegEncoded = BitmapManager.EncodeToJPEG(screen, 0.5, 0.5, 0.25);
-            packet.AddRange(BitConverter.GetBytes(jpegEncoded.Length));
+            List<byte> jpegSize = new List<byte>(BitConverter.GetBytes(jpegEncoded.Length));
+
+            if (BitConverter.IsLittleEndian)
+                jpegSize.Reverse();
+
+            packet.AddRange(jpegSize);
             packet.AddRange(jpegEncoded);
 
             return packet.ToArray();
