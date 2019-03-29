@@ -104,7 +104,7 @@ public class MainActivity extends Activity implements ScreenRenewalObserver {
         stopClient = new Runnable() {
             @Override
             public void run() {
-                if (connectionManager != null || connectionManager.isConnected()) {
+                if (connectionManager != null && connectionManager.isConnected()) {
                     try {
                         connectionManager.stopClient();
                     } catch (Exception e) {
