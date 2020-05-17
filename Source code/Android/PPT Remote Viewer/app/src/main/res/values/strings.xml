@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PPT Remote Viewer</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="connection_already_success">
+        Your device <b><font color='#ff0000'>CONNECTION</font></b> to server has been <b><font color='#ff0000'>ALREADY CONNECTED</font></b>.
+    </string>
+    <string name="connection_already_success_title">
+        Already connected!
+    </string>
+
+    <string name="connection_fail">
+        <b><font color='#ff0000'>CHECK</font></b> your computer <b><font color='#ff0000'>BEFORE CONNECT</font></b>.
+    </string>
+    <string name="connection_fail_title">
+        Unavailable connection!
+    </string>
+
+    <string name="connection_need">
+        You need to <b><font color='#ff0000'>CONNECT</font></b> your device to computer server <b><font color='#ff0000'>BEFORE</font></b> control PPT.
+    </string>
+    <string name="connection_need_title">
+        Not connected!
+    </string>
+
+    <string name="connection_lost">
+        Your device <b><font color='#ff0000'>CONNECTION</font></b> to server has been <b><font color='#ff0000'>LOST</font></b>.
+    </string>
+    <string name="connection_lost_title">
+        Disconnected!
+    </string>
+
+    <string name="connection_already_lost">
+        Your device <b><font color='#ff0000'>CONNECTION</font></b> to server has been <b><font color='#ff0000'>ALREADY LOST</font></b>.
+    </string>
+    <string name="connection_already_lost_title">
+        Already disconnected!
+    </string>
+</resources>
